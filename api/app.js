@@ -5,7 +5,6 @@ const cors = require("cors");
 const port = 3000;
 
 try {
-  // const uri = "mongodb+srv://nafra:nafra219@gigihlab.cjdbave.mongodb.net/cinema?retryWrites=true&w=majority";
   const uri = process.env.MONGODB_URI || "mongodb://localhost:27017/cinema";
   const db = mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true }).then(() => {
     console.log("Connect");
