@@ -1,0 +1,41 @@
+version: "3"
+
+services:
+  mongo:
+    image: mongo
+    networks:
+      - my_network
+    volumes:
+      - mongo_data:/data/db
+    ports:
+      - "27017:27017"
+
+  api:
+    container_name: api_server
+    build:
+      context: ./api
+      dockerfile: Dockerfile
+    networks:
+      - my_network
+    ports:
+      - "3000:3000"
+    depends_on:
+      - mongo
+    environment:
+      - MONGODB_URI=mongodb://mongo:27017/cinema
+
+  client:
+    container_name: ui_react
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    networks:
+      - my_network
+    ports:
+      - "3001:3001"
+
+volumes:
+  mongo_data:
+
+networks:
+  my_network:
